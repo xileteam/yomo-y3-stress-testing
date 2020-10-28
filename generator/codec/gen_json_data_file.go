@@ -4,19 +4,19 @@ import (
 	"flag"
 	"fmt"
 	"github.com/10cella/yomo-y3-stress-testing/internal/generator"
-	"io/ioutil"
+	"os"
 )
 
 func main() {
 	file := flag.String("file", "./assets/json/json_test_data.bin", "file path of test data")
+	count := flag.Int("count", 10, "count of data")
 
-	data := generator.NewJsonTestData().GenData()
-	fmt.Printf("%#x\n", data)
-
-	err := ioutil.WriteFile(*file, data, 0644) //-rw-r--r--
-	if err != nil {
-		panic(err)
+	f, _ := os.Create(*file)
+	for i := 1; i <= *count; i++ {
+		_, _ = f.Write(generator.NewJsonTestData().GenData())
+		_, _ = f.Write([]byte("\n"))
 	}
+	_ = f.Close()
 
-	fmt.Printf("write data to file successfully, file=%v\n", *file)
+	fmt.Printf("write data to file successfully, file=%v, count=%v\n", *file, *count)
 }
