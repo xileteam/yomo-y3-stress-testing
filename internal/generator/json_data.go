@@ -45,17 +45,17 @@ func (c *jsonTestData) newMapData(section []int) map[string]interface{} {
 		case 0:
 			data[key] = "a"
 		case 1:
-			data[key] = int32(1)
+			data[key] = int32(-65)
 		case 2:
-			data[key] = uint32(1)
+			data[key] = uint32(128)
 		case 3:
-			data[key] = int64(1)
+			data[key] = int64(-1)
 		case 4:
-			data[key] = uint64(1)
+			data[key] = uint64(18446744073709551615)
 		case 5:
-			data[key] = float32(1)
+			data[key] = float32(0.25)
 		case 6:
-			data[key] = float64(1)
+			data[key] = float64(23)
 		}
 	}
 	return data

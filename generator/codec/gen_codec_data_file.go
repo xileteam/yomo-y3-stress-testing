@@ -8,12 +8,14 @@ import (
 )
 
 func main() {
-	file := flag.String("file", "./assets/codec/codec_test_data.bin", "file path of test data")
-	count := flag.Int("count", 10, "count of data")
+	file := flag.String("file", "./assets/codec/codec_test_data.bin", "file path of json data")
+	count := flag.Int("count", 1000, "count of data")
+	flag.Parse()
 
 	f, _ := os.Create(*file)
 	for i := 1; i <= *count; i++ {
 		_, _ = f.Write(generator.NewCodecTestData().GenData())
+		//_, _ = f.Write(generator.NewCodecTestData().GenDataBy(3))//debug:
 	}
 	_ = f.Close()
 

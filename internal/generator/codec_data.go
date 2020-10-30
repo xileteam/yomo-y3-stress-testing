@@ -35,24 +35,36 @@ func (c *codecTestData) newBufData(m map[byte]interface{}) []byte {
 	return mapping.NewDataCodec(m)
 }
 
+// debug:
+//func (c *codecTestData) newMapData(section []byte) map[byte]interface{} {
+//	data := make(map[byte]interface{})
+//	for i, v := range section {
+//		switch i % 7 {
+//		default:
+//			data[v] = "a"
+//		}
+//	}
+//	return data
+//}
+
 func (c *codecTestData) newMapData(section []byte) map[byte]interface{} {
 	data := make(map[byte]interface{})
 	for i, v := range section {
 		switch i % 7 {
 		case 0:
-			data[v] = "a"
+			data[v] = "a" // 0x61
 		case 1:
-			data[v] = int32(1)
+			data[v] = int32(-65) // []byte{0xFF, 0x3F}
 		case 2:
-			data[v] = uint32(1)
+			data[v] = uint32(128) // []byte{0x81, 0x00}
 		case 3:
-			data[v] = int64(1)
+			data[v] = int64(-1) // []byte{0x7F}
 		case 4:
-			data[v] = uint64(1)
+			data[v] = uint64(18446744073709551615) // []byte{0x7F}
 		case 5:
-			data[v] = float32(1)
+			data[v] = float32(0.25) // []byte{0x3E, 0x80}
 		case 6:
-			data[v] = float64(1)
+			data[v] = float64(23) // []byte{0x40, 0x37}
 		}
 	}
 	return data
