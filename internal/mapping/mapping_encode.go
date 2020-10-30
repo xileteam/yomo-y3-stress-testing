@@ -7,16 +7,17 @@ import (
 	y3 "github.com/yomorun/yomo-codec-golang"
 )
 
-// temp: test...
+// temp: json...
 func NewDataCodec(data map[byte]interface{}) []byte {
 	npn := EncodeMap(data, nil)
 	return npn.Encode()
 }
 
-// temp: test...
+// temp: json...
 func EncodeMap(data map[byte]interface{}, wrapper *y3.NodePacketEncoder) *y3.NodePacketEncoder {
 	if wrapper == nil {
-		wrapper = y3.NewNodePacketEncoder(0x01)
+		//wrapper = y3.NewNodePacketEncoder(0x01) //这会导致监听0x01的key时变慢很多
+		wrapper = y3.NewNodePacketEncoder(0x00)
 	}
 
 	for k, v := range data {
