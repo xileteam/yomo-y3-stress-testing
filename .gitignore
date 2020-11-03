@@ -20,3 +20,6 @@
 *.docker
 *.deploy
 *.bin
+
+# jupyter-lab
+.ipynb_checkpoints
