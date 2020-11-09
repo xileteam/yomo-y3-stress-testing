@@ -113,7 +113,7 @@
 
 ## 1. 串行测试过程
 
-* 被测试代码：``./internal/decoder/report_serial/report_benchmark_test.go`，如：
+* 被测试代码：`./internal/decoder/report_serial/report_benchmark_test.go`，如：
 
   ```go 
   // 针对YoMo Codec Y3进行基准测试
@@ -172,7 +172,7 @@
 
 为了最大限度的提高CPU的利用率，观察解码器在多核场景下的表现，增加了Parallel的测试项
 
-* 被测试代码：``./internal/decoder/report_parallel/report_benchmark_test.go`，如：
+* 被测试代码：`./internal/decoder/report_parallel/report_benchmark_test.go`，如：
 
   ```go
   func Benchmark_Codec_C63_K32(b *testing.B) {
