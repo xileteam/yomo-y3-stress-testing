@@ -18,7 +18,7 @@ func main() {
 	fmt.Printf("start pprof\n")
 	go pprof.Run()
 	time.Sleep(5 * time.Second)
-	
+
 	fmt.Printf("start testing...\n")
 	for {
 		if decoder.TakeValueFromCodec(0x20, dataCodec) == nil {
@@ -30,7 +30,7 @@ func main() {
 		//time.Sleep(200 * time.Microsecond)
 	}
 
-	time.Sleep(3600 * time.Second)
+	//time.Sleep(3600 * time.Second)
 }
 
 

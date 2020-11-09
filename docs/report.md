@@ -8,7 +8,7 @@
 
 # YoMo Codec 介绍
 
-​		[Yomo-codec-golang](https://github.com/yomorun/yomo-codec-golang) 是通过golang语言实现 [YoMo Codec](https://github.com/yomorun/yomo-codec) 的 [SPEC](https://github.com/yomorun/yomo-codec/blob/draft-01/SPEC.md) 描述 ；提供对`TLV结构`及基础数据类型进行编解码的能力，并且为 [YoMo](https://github.com/yomorun/yomo) 提供支持其消息处理的编解码工具。你可以为其扩展出更多数据类型的处理，甚至可以扩展并应用到其它需要编解码的框架中。
+​		[yomo-codec-golang](https://github.com/yomorun/yomo-codec-golang) 是通过golang语言实现 [YoMo Codec](https://github.com/yomorun/yomo-codec) 的 [SPEC](https://github.com/yomorun/yomo-codec/blob/draft-01/SPEC.md) 描述 ；提供对`TLV结构`及基础数据类型进行编解码的能力，并且为 [YoMo](https://github.com/yomorun/yomo) 提供支持其消息处理的编解码工具。你可以为其扩展出更多数据类型的处理，甚至可以扩展并应用到其它需要编解码的框架中。
 
 项目介绍：[README.md](https://github.com/yomorun/yomo-codec-golang/blob/master/README_CN.md)
 
@@ -163,6 +163,7 @@
 * 生成结果图表：`./docs/report_graphics.ipynb`
 
   ```bash
+  python --version # Python version > 3.2.x
   pip install runipy
   bar_ylim=70000 barh_xlim=20 runipy ./report_graphics.ipynb
   ```
@@ -216,7 +217,7 @@
     * 图3.1的Y坐标：表示单次操作耗时的纳秒数。
     * 图3.2的X坐标：表示 (JSON解码耗时/Y3解码耗时)的增加倍数。如：43010/2077=20.07
 
-* 串行Benchmark测试结果：
+* 并行Benchmark测试结果：
 
   * 单次解码提取的耗时比较：图3.3
 
@@ -232,10 +233,14 @@
 
 * Y3的解码性能比JSON有很大得提升，随着数据包中包含的key-value对越多，则性能提升越明显，平均有10倍的增长。
   *(20.7+15.8+6.2+3.3)/4=11.5*
-* 在利用多核进行并行解码，其ns/op的性能也有很大的提升。
-  2077/706=2.9，1361/505=2.6，1667/515=3.2，610/175=3.5
-
-
+  
+* 利用多核进行并行解码，其ns/op的性能也有很大的提升。并行与串行对比有3倍的提升：
+  
+  |          | C63-K32 | C32-K16 | C16-K08 | C03-K02 |
+  | -------- | ------- | ------- | ------- | ------- |
+  | 串行测试 | 2077    | 1361    | 1667    | 610     |
+  | 并行测试 | 706     | 505     | 515     | 175     |
+  | 增长     | 290%    | 260%    | 320%    | 350%    |
 
 # CPU资源分析
 
@@ -263,14 +268,12 @@
   			panic(errors.New("take is failure"))
   		}
   	}
-  
-  	time.Sleep(3600 * time.Second)
   }
   ```
-
+  
   * pprof.Run()：用于启动pprof
-  * 程序不断循环的对Y3和JSON进行解码，对过观察cpu profile的取样图观察其CPU的资源占比
-
+* 程序不断循环的对Y3和JSON进行解码，通过观察cpu profile的取样图观察其CPU的资源占比
+  
 * 运行测试：
 
   ```bash
